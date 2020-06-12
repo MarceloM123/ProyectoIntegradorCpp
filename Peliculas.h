@@ -15,8 +15,8 @@ private:
 public:
     Peliculas();
     Peliculas(int ID, string nombre, string duracion, string genero, double calificacion);
-    //void setDuracion(string duracion);
-    //void setCalificacion(double calificacion);
+
+    void setCalificacion(double calificacion);
 
     string getDuracion();
     double getCalificacion();
@@ -34,13 +34,10 @@ Peliculas::Peliculas(int ID, string nombre, string duracion, string genero, doub
     this -> calificacion = calificacion;
 }
 
-/*void Peliculas::setDuracion(string duracion) {
-    this -> duracion = duracion;
-}
 
 void Peliculas::setCalificacion(double calificacion) {
     this -> calificacion = calificacion;
-}*/
+}
 
 string Peliculas::getDuracion() {
     return duracion;

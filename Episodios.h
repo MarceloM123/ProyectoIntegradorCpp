@@ -17,10 +17,10 @@ private:
     int temporada;
 public:
     Episodios();
-    Episodios(int ID, string IDEpisodio, string nombre, string duracion, double calificacion, int temporada, int numDeTemporadas, string genero);
-    //void setIDEpisodios(int IDEpisodio);
-    //void setDuracion(string duracion);
-    //void setCalificacion(double calificacion);
+    Episodios(int ID, string IDEpisodio, string nombre, string duracion, 
+    double calificacion, int temporada);
+
+    void setCalificacion(double calificacion);
 
     string getIDEpisodios();
     string getDuracion();
@@ -32,16 +32,21 @@ public:
 
 Episodios::Episodios():Series() {
     IDEpisodio = "";
-    duracion = "";
+    duracion = "00:00";
     calificacion = 0.0;
     temporada = 0;
 }
 
-Episodios::Episodios(int ID, string IDEpisodio, string nombre, string duracion, double calificacion, int temporada, int numDeTemporadas, string genero):Series(ID, nombre, genero, numDeTemporadas) {
+Episodios::Episodios(int ID, string IDEpisodio, string nombre, string duracion, 
+double calificacion, int temporada):Series(ID, nombre, genero, numDeTemporadas) {
     this -> IDEpisodio = IDEpisodio;
     this -> duracion = duracion;
     this -> calificacion = calificacion;
     this -> temporada = temporada;
+}
+
+void Episodios::setCalificacion(double calificacion) {
+    this -> calificacion = calificacion;
 }
 
 string Episodios::getIDEpisodios() {
