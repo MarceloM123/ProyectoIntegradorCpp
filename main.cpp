@@ -13,10 +13,11 @@ using namespace std;
 #include "Series.h"
 #include "Episodios.h"
 
-string cargarDatos(vector<Peliculas*> &peliculas, vector<Series*> &series, vector<Episodios*> &episodios) {
-    ifstream epi("ProyectoIntegrador-Episodios-1.csv");
+// ##### 1 #####
+void cargarDatos(vector<Peliculas*> &peliculas, vector<Series*> &series, vector<Episodios*> &episodios) {
     ifstream peli("ProyectoIntegrador-Peliculas-1.csv");
     ifstream seri("ProyectoIntegrador-Series-1.csv");
+    ifstream epi("ProyectoIntegrador-Episodios-1.csv");
 
     string line;
     string valor;
@@ -30,8 +31,8 @@ string cargarDatos(vector<Peliculas*> &peliculas, vector<Series*> &series, vecto
 
     // Cargar archivo de Peliculas
     if(peli.is_open()) {
-        getline(epi, line);
-        while(getline(epi, line)) {
+        getline(peli, line);
+        while(getline(peli, line)) {
 
             stringstream ss(line);
             col = 0;
@@ -64,8 +65,8 @@ string cargarDatos(vector<Peliculas*> &peliculas, vector<Series*> &series, vecto
 
     // Cargar archivo de Series
     if(seri.is_open()) {
-        getline(epi, line);
-        while(getline(epi, line)) {
+        getline(seri, line);
+        while(getline(seri, line)) {
 
             stringstream ss(line);
             col = 0;
@@ -133,9 +134,33 @@ string cargarDatos(vector<Peliculas*> &peliculas, vector<Series*> &series, vecto
         }
         epi.close();
     }
-    return "";
 }
 
+// ##### 2 #####
+
+// ##### 3 #####
+
+// ##### 4 #####
+
+// ##### 5 #####
+void rangoPeliculas(vector<Peliculas*> peliculas, int min, int max) {
+    int count = 1;
+
+    for(int i = 0; i < peliculas.size(); i++) {
+
+        if(peliculas[i]->getCalificacion() >= min && peliculas[i]->getCalificacion() <= max) {
+            cout << endl;
+            cout << count << ") ";
+            peliculas[i]->show();
+            cout << endl;
+            count++;
+
+        }
+    }
+}
+
+
+// ##### 6 #####
 
 
 
@@ -146,32 +171,49 @@ int main() {
     vector<Series*> series;
     vector<Episodios*> episodios; 
 
-    int opc;
-    cout << endl << "-------------------------------------------------------------------------------------------" << endl;
-    cout << "1) Cargar archivos de datos." << endl;
-    cout << "2) Mostrar los videos en general con un cierto rango de calificación de un cierto género." << endl;
-    cout << "3) Mostrar los videos en general de un cierto género." << endl;
-    cout << "4) Mostrar los episodios de una determinada serie con un rango de calificación determinada." << endl;
-    cout << "5) Mostrar las películas con cierto rango de calificación." << endl;
-    cout << "6) Calificar un video." << endl;
-    cout << "0) Salir." << endl;
-    cout << "-------------------------------------------------------------------------------------------" << endl;
-    cout << "Opcion: ";
-    cin >> opc;
-
     bool sw = true;
     int opcCase1;
 
     while (sw) {
+        
+        int min, max;
+        string genero;
+
+        int opc;
+        cout << endl << "-------------------------------------------------------------------------------------------" << endl;
+        cout << "1) Cargar archivos de datos." << endl;
+        cout << "2) Mostrar los videos en general con un cierto rango de calificación de un cierto género." << endl;
+        cout << "3) Mostrar los videos en general de un cierto género." << endl;
+        cout << "4) Mostrar los episodios de una determinada serie con un rango de calificación determinada." << endl;
+        cout << "5) Mostrar las películas con cierto rango de calificación." << endl;
+        cout << "6) Calificar un video." << endl;
+        cout << "0) Salir." << endl;
+        cout << "-------------------------------------------------------------------------------------------" << endl;
+        cout << "Opcion: ";
+        cin >> opc;
 
         switch (opc) {
 
         case 1:
             // Cargar archivos de datos
+            cargarDatos(peliculas, series, episodios);
+            cout << endl << "Archivos han sido cargados" << endl;
             break;
 
         case 2:
             // Mostrar los videos en general con un cierto rango de calificación de un cierto género
+            cout << "¿Que genero desea ver?" << endl;
+            cout << "1) Drama" << endl;
+            cout << "2) Acción" << endl;
+            cout << "3) Misterio" << endl;
+            cin >> genero;
+
+            cout << "Numero minimo de rango (0-10): ";
+            cin >> min;
+            cout << "Numero maximo de rango (0-10): ";
+            cin >> max;
+
+            
             break;
 
         case 3:
@@ -184,6 +226,14 @@ int main() {
 
         case 5:
             // Mostrar las películas con cierto rango de calificación
+            cout << "Numero minimo de rango (0-10): ";
+            cin >> min;
+            cout << "Numero maximo de rango (0-10): ";
+            cin >> max;
+
+            rangoPeliculas(peliculas, min, max);
+            cout << endl;
+
             break;
 
         case 6:
