@@ -20,6 +20,7 @@ public:
 
     string getDuracion();
     double getCalificacion();
+    string getGenero();
 
     void show();
 };
@@ -45,6 +46,10 @@ string Peliculas::getDuracion() {
 
 double Peliculas::getCalificacion() {
     return calificacion;
+}
+
+string Peliculas::getGenero() {
+    return genero;
 }
 
 void Peliculas::show() {
