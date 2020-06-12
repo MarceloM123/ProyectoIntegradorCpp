@@ -22,7 +22,7 @@ public:
     string getNombre();
     string getGenero();
 
-    virtual void show();
+    virtual void show() = 0;
 };
 
 Video::Video() {
