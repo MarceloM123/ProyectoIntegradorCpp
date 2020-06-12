@@ -13,7 +13,7 @@ using namespace std;
 #include "Series.h"
 #include "Episodios.h"
 
-string cargarDatos(vector<Peliculas*> peliculas, vector<Series*> series, vector<Episodios*> episodios) {
+string cargarDatos(vector<Peliculas*> &peliculas, vector<Series*> &series, vector<Episodios*> &episodios) {
     ifstream epi("ProyectoIntegrador-Episodios-1.csv");
     ifstream peli("ProyectoIntegrador-Peliculas-1.csv");
     ifstream seri("ProyectoIntegrador-Series-1.csv");
@@ -129,19 +129,11 @@ string cargarDatos(vector<Peliculas*> peliculas, vector<Series*> series, vector<
                 }
                 col++;
             }
-            episodios.push_back(new Episodios());
+            episodios.push_back(new Episodios(ID, IDEpisodio, nombre, duracion, calificacion, temporada));
         }
         epi.close();
     }
-
-
-
-
-
-
-
-
-
+    return "";
 }
 
 
