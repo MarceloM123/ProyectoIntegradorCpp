@@ -14,9 +14,9 @@ protected:
 public:
     Series();
     Series(int ID, string nombre, string genero, int numDeTemporadas);
-    //void setTemporadas(int temporadas);
 
     int getNumDeTemporadas();
+    int getID();
 
     virtual void show();
 };
@@ -29,12 +29,13 @@ Series::Series(int ID, string nombre, string genero, int numDeTemporadas):Video(
     this -> numDeTemporadas = numDeTemporadas;
 }
 
-/*void Series::setTemporadas(int temporadas) {
-    this -> temporadas = temporadas;
-}*/
 
 int Series::getNumDeTemporadas() {
     return numDeTemporadas;
+}
+
+int Series::getID() {
+    return ID;
 }
 
 void Series::show() {

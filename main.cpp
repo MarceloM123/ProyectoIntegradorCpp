@@ -136,16 +136,111 @@ void cargarDatos(vector<Peliculas*> &peliculas, vector<Series*> &series, vector<
     }
 }
 
-// ##### 2 #####
+// ##### 2 ##### AUN NO FUNCIONA
+void rangoGeneroVideos(vector<Peliculas*> peliculas, vector<Series*> series, 
+vector<Episodios*> episodios, string genero,int min, int max) {
 
-// ##### 3 #####
+    int count1 = 1;
+    for(int i = 0; i < peliculas.size(); i++) {
+        if(peliculas[i]->getCalificacion() >= min && peliculas[i]->getCalificacion() <= max && peliculas[i]->getGenero() == genero) {
+
+            cout << endl;
+            cout << count1 << ") ";
+            peliculas[i]->show();
+            cout << endl;
+
+            count1++;
+        }
+
+    }
+
+    int count2 = 1;
+    for(int i = 0; i < episodios.size(); i++) {
+        if(episodios[i]->getCalificacion() >= min && peliculas[i]->getCalificacion() <= max && episodios[i]->getGenero() == genero) {
+
+            cout << endl;
+            cout << count2 << ") ";
+            episodios[i]->show();
+            cout << endl;
+
+            count2++;
+        }
+        
+    }
+
+}
+
+
+// ##### 3 ##### AUN NO FUNCIONA
+void generoVideos(vector<Peliculas*> peliculas, vector<Series*> series, 
+vector<Episodios*> episodios, string genero) {
+
+    // SI UTILIZAS EL GENERO DE ACCION DEVERIAN SALIR 27 VIDEOS *************
+
+    int count1 = 1;
+
+    for(int i = 0; i < peliculas.size(); i++) {
+        if(peliculas[i]->getGenero() == genero) {
+
+            cout << endl;
+            cout << count1 << ") ";
+            peliculas[i]->show();
+            cout << endl;
+
+            count1++;
+        }
+
+    }
+
+    /*vector<int> coneccionID;
+    for(int i = 0; i < series.size(); i++) {
+        coneccionID.push_back(series[i]->getID());
+    }*/
+
+
+    int count2 = 1;
+    for(int i = 0; i < episodios.size(); i++) {
+        for(int j = 0; j < series.size(); j++) {
+
+            if(series[j]->getID() == episodios[i]->getID()) {
+
+                if(series[j]->getGenero() == genero) {
+
+                cout << endl;
+                cout << count2 << ") ";
+                episodios[i]->show();
+                cout << endl;
+
+                count2++;                  
+
+                }
+            }
+        }
+
+
+
+        /*if(episodios[i]->getGenero() == genero) {
+
+            cout << endl;
+            cout << count2 << ") ";
+            episodios[i]->show();
+            cout << endl;
+
+            count2++;
+        }*/
+        
+    }
+
+
+
+}
 
 // ##### 4 #####
 
 // ##### 5 #####
 void rangoPeliculas(vector<Peliculas*> peliculas, int min, int max) {
-    int count = 1;
 
+    int count = 1;
     for(int i = 0; i < peliculas.size(); i++) {
 
         if(peliculas[i]->getCalificacion() >= min && peliculas[i]->getCalificacion() <= max) {
@@ -206,18 +301,33 @@ int main() {
             cout << "1) Drama" << endl;
             cout << "2) Acción" << endl;
             cout << "3) Misterio" << endl;
+            cout << "Por favor escriba el nombre del genero (sin acentos): ";
             cin >> genero;
+            cout << endl;
 
-            cout << "Numero minimo de rango (0-10): ";
+            cout << "Numero minimo de calificación (0-10): ";
             cin >> min;
-            cout << "Numero maximo de rango (0-10): ";
+            cout << "Numero maximo de calificación (0-10): ";
             cin >> max;
 
-            
+            rangoGeneroVideos(peliculas, series, episodios, genero, min, max);
+            cout << endl;
+
             break;
 
         case 3:
             // Mostrar los videos en general de un cierto género
+            cout << "¿Que genero desea ver?" << endl;
+            cout << "1) Drama" << endl;
+            cout << "2) Acción" << endl;
+            cout << "3) Misterio" << endl;
+            cout << "Por favor escriba el nombre del genero (sin acentos): ";
+            cin >> genero;
+            cout << endl;
+
+            generoVideos(peliculas, series, episodios, genero);
+            cout << endl;
+
             break;
 
         case 4:

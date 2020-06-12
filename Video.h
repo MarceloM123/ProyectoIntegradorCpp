@@ -14,9 +14,6 @@ protected:
 public:
     Video();
     Video(int ID, string nombre, string genero);
-    //void setID(int ID);
-    //void setNombre(string nombre);
-    //void setGenero(string genero);
 
     int getID();
     string getNombre();
@@ -37,17 +34,6 @@ Video::Video(int ID, string nombre, string genero) {
     this -> genero = genero; 
 }
 
-/*void Video::setID(int ID) {
-    this -> ID = ID;
-}
-
-void Video::setNombre(string nombre) {
-    this -> nombre = nombre;
-}
-
-void Video::setGenero(string genero) {
-    this -> genero = genero;
-}*/
 
 int Video::getID() {
     return ID;
