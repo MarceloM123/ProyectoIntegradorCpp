@@ -38,7 +38,7 @@ Episodios::Episodios():Series() {
 }
 
 Episodios::Episodios(int ID, string IDEpisodio, string nombre, string duracion, 
-double calificacion, int temporada):Series(ID, nombre, genero, numDeTemporadas) {
+double calificacion, int temporada):Series(ID, nombre) {
     this -> IDEpisodio = IDEpisodio;
     this -> duracion = duracion;
     this -> calificacion = calificacion;
@@ -66,8 +66,10 @@ int Episodios::getTemporada() {
 }
 
 void Episodios::show() {
-    Series::show();
-    cout << "Duración: " << duracion << ". Calificación: " << calificacion << "." << endl;
+    Video::epiShow();
+    
+    cout << ". Duración: " << duracion << ". Calificación: " << calificacion << "." << endl;
+    cout << "Temporada: " << temporada << endl;
 }
 
 #endif

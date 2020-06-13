@@ -14,6 +14,7 @@ protected:
 public:
     Series();
     Series(int ID, string nombre, string genero, int numDeTemporadas);
+    Series(int ID, string nombre);
 
     int getNumDeTemporadas();
     int getID();
@@ -29,6 +30,10 @@ Series::Series(int ID, string nombre, string genero, int numDeTemporadas):Video(
     this -> numDeTemporadas = numDeTemporadas;
 }
 
+Series::Series(int ID, string nombre):Video(ID, nombre, "") {
+    numDeTemporadas = 1;
+}
+
 
 int Series::getNumDeTemporadas() {
     return numDeTemporadas;
@@ -40,6 +45,7 @@ int Series::getID() {
 
 void Series::show() {
     Video::show();
+    
     cout << "Numero de temporadas: " << numDeTemporadas << "." << endl;
 }
 

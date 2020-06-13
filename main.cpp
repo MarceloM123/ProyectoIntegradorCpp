@@ -138,23 +138,31 @@ void cargarDatos(vector<Peliculas*> &peliculas, vector<Series*> &series, vector<
 
 // ##### 2 ##### AUN NO FUNCIONA
 void rangoGeneroVideos(vector<Peliculas*> peliculas, vector<Series*> series, 
-vector<Episodios*> episodios, string genero,int min, int max) {
+vector<Episodios*> episodios, string genero, double min, double max) {
 
-    int count1 = 1;
+    int count = 1;
+
     for(int i = 0; i < peliculas.size(); i++) {
-        if(peliculas[i]->getCalificacion() >= min && peliculas[i]->getCalificacion() <= max && peliculas[i]->getGenero() == genero) {
+        
+        string peliGenero = peliculas[i]->getGenero();
+        
+        if(peliculas[i]->getCalificacion() >= min && peliculas[i]->getCalificacion() <= max && peliGenero == genero) {
 
             cout << endl;
-            cout << count1 << ") ";
+            cout << count << ") ";
             peliculas[i]->show();
             cout << endl;
 
-            count1++;
+            count++;
         }
 
     }
 
-    int count2 = 1;
+
+
+
+
+    /*int count2 = 1;
     for(int i = 0; i < episodios.size(); i++) {
         if(episodios[i]->getCalificacion() >= min && peliculas[i]->getCalificacion() <= max && episodios[i]->getGenero() == genero) {
 
@@ -166,39 +174,66 @@ vector<Episodios*> episodios, string genero,int min, int max) {
             count2++;
         }
         
-    }
+    }*/
+
+
+    for(int i = 0; i < episodios.size(); i++) {
+        for(int j = 0; j < series.size(); j++) {
+
+            if(series[j]->getID() == episodios[i]->getID()) {
+
+                if(episodios[i]->getCalificacion() >= min && episodios[i]->getCalificacion() <= max && series[j]->getGenero() == genero) {
+
+                cout << endl;
+                cout << count << ") ";
+                episodios[i]->show();
+                cout << endl;
+
+                count++;                  
+
+                }
+            }
+        }
+    } 
+
+
+
+
+
+
+
+
+
+
+
 
 }
 
 
-// ##### 3 ##### AUN NO FUNCIONA
+// ##### 3 #####
 void generoVideos(vector<Peliculas*> peliculas, vector<Series*> series, 
 vector<Episodios*> episodios, string genero) {
 
-    // SI UTILIZAS EL GENERO DE ACCION DEVERIAN SALIR 27 VIDEOS *************
+    // SI UTILIZAS EL GENERO DE ACCION DEVERIAN SALIR 28 VIDEOS *************
 
-    int count1 = 1;
+    int count = 1; 
 
     for(int i = 0; i < peliculas.size(); i++) {
-        if(peliculas[i]->getGenero() == genero) {
+        
+        string peliGenero = peliculas[i]->getGenero();
+        
+        if(peliGenero == genero) {
 
             cout << endl;
-            cout << count1 << ") ";
+            cout << count << ") ";
             peliculas[i]->show();
             cout << endl;
 
-            count1++;
+            count++;
         }
 
     }
 
-    /*vector<int> coneccionID;
-    for(int i = 0; i < series.size(); i++) {
-        coneccionID.push_back(series[i]->getID());
-    }*/
-
-
-    int count2 = 1;
     for(int i = 0; i < episodios.size(); i++) {
         for(int j = 0; j < series.size(); j++) {
 
@@ -207,31 +242,16 @@ vector<Episodios*> episodios, string genero) {
                 if(series[j]->getGenero() == genero) {
 
                 cout << endl;
-                cout << count2 << ") ";
+                cout << count << ") ";
                 episodios[i]->show();
                 cout << endl;
 
-                count2++;                  
+                count++;                  
 
                 }
             }
         }
-
-
-
-        /*if(episodios[i]->getGenero() == genero) {
-
-            cout << endl;
-            cout << count2 << ") ";
-            episodios[i]->show();
-            cout << endl;
-
-            count2++;
-        }*/
-        
-    }
-
-
+    } 
 
 }
 
@@ -271,7 +291,7 @@ int main() {
 
     while (sw) {
         
-        int min, max;
+        double min, max;
         string genero;
 
         int opc;
@@ -305,9 +325,9 @@ int main() {
             cin >> genero;
             cout << endl;
 
-            cout << "Numero minimo de calificación (0-10): ";
+            cout << "Numero minimo de calificación (0.0-10.0): ";
             cin >> min;
-            cout << "Numero maximo de calificación (0-10): ";
+            cout << "Numero maximo de calificación (0.0-10.0): ";
             cin >> max;
 
             rangoGeneroVideos(peliculas, series, episodios, genero, min, max);
