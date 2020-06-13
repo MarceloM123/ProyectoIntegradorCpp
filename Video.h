@@ -20,6 +20,7 @@ public:
     string getGenero();
 
     virtual void show() = 0;
+    virtual void epiShow();
 };
 
 Video::Video() {
@@ -49,6 +50,10 @@ string Video::getGenero() {
 
 void Video::show() {
     cout << "Nombre: " << nombre << ". Genero: " << genero << "." << endl;
+}
+
+void Video::epiShow() {
+    cout << "Nombre: " << nombre;
 }
 
 #endif
