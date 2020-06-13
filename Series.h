@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -11,6 +12,7 @@ using namespace std;
 class Series : public Video {
 protected:
     int numDeTemporadas;
+
 public:
     Series();
     Series(int ID, string nombre, string genero, int numDeTemporadas);
@@ -20,6 +22,8 @@ public:
     int getID();
 
     virtual void show();
+    void showNombre();
+
 };
 
 Series::Series():Video() {
@@ -28,12 +32,12 @@ Series::Series():Video() {
 
 Series::Series(int ID, string nombre, string genero, int numDeTemporadas):Video(ID, nombre, genero) {
     this -> numDeTemporadas = numDeTemporadas;
+
 }
 
 Series::Series(int ID, string nombre):Video(ID, nombre, "") {
     numDeTemporadas = 1;
 }
-
 
 int Series::getNumDeTemporadas() {
     return numDeTemporadas;
@@ -47,6 +51,10 @@ void Series::show() {
     Video::show();
     
     cout << "Numero de temporadas: " << numDeTemporadas << "." << endl;
+}
+
+void Series::showNombre() {
+    cout << "Nombre: " << nombre << endl;
 }
 
 #endif

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -15,6 +16,7 @@ private:
     string duracion;
     double calificacion;
     int temporada;
+
 public:
     Episodios();
     Episodios(int ID, string IDEpisodio, string nombre, string duracion, 
@@ -28,6 +30,7 @@ public:
     int getTemporada();
 
     void show();
+    void caliShow();
 };
 
 Episodios::Episodios():Series() {
@@ -70,6 +73,10 @@ void Episodios::show() {
     
     cout << ". Duración: " << duracion << ". Calificación: " << calificacion << "." << endl;
     cout << "Temporada: " << temporada << endl;
+}
+
+void Episodios::caliShow() {
+    cout << calificacion << endl; 
 }
 
 #endif

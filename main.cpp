@@ -3,8 +3,6 @@
 #include <fstream>
 #include <vector>
 #include <sstream>
-#include <ctime>
-#include <cstdlib>
 
 using namespace std;
 
@@ -13,7 +11,7 @@ using namespace std;
 #include "Series.h"
 #include "Episodios.h"
 
-// ##### 1 #####
+// ##### 1 ##### Cargar archivos de datos
 void cargarDatos(vector<Peliculas*> &peliculas, vector<Series*> &series, vector<Episodios*> &episodios) {
     ifstream peli("ProyectoIntegrador-Peliculas-1.csv");
     ifstream seri("ProyectoIntegrador-Series-1.csv");
@@ -61,7 +59,7 @@ void cargarDatos(vector<Peliculas*> &peliculas, vector<Series*> &series, vector<
             peliculas.push_back(new Peliculas(ID, nombre, duracion, genero, calificacion));
         }
         peli.close();
-    }
+    } else {cout << "No se leyo archivo" << endl;}
 
     // Cargar archivo de Series
     if(seri.is_open()) {
@@ -92,7 +90,7 @@ void cargarDatos(vector<Peliculas*> &peliculas, vector<Series*> &series, vector<
             series.push_back(new Series(ID, nombre, genero, numDeTemporadas));
         }
         seri.close();
-    }
+    } else {cout << "No se leyo archivo" << endl;}
 
     // Cargar archivos de Episodios
     if(epi.is_open()) {
@@ -133,10 +131,10 @@ void cargarDatos(vector<Peliculas*> &peliculas, vector<Series*> &series, vector<
             episodios.push_back(new Episodios(ID, IDEpisodio, nombre, duracion, calificacion, temporada));
         }
         epi.close();
-    }
+    } else {cout << "No se leyo archivo" << endl;}
 }
 
-// ##### 2 ##### AUN NO FUNCIONA
+// ##### 2 ##### Mostrar los videos en general con un cierto rango de calificación de un cierto género
 void rangoGeneroVideos(vector<Peliculas*> peliculas, vector<Series*> series, 
 vector<Episodios*> episodios, string genero, double min, double max) {
 
@@ -155,27 +153,7 @@ vector<Episodios*> episodios, string genero, double min, double max) {
 
             count++;
         }
-
     }
-
-
-
-
-
-    /*int count2 = 1;
-    for(int i = 0; i < episodios.size(); i++) {
-        if(episodios[i]->getCalificacion() >= min && peliculas[i]->getCalificacion() <= max && episodios[i]->getGenero() == genero) {
-
-            cout << endl;
-            cout << count2 << ") ";
-            episodios[i]->show();
-            cout << endl;
-
-            count2++;
-        }
-        
-    }*/
-
 
     for(int i = 0; i < episodios.size(); i++) {
         for(int j = 0; j < series.size(); j++) {
@@ -197,24 +175,11 @@ vector<Episodios*> episodios, string genero, double min, double max) {
     } 
 
 
-
-
-
-
-
-
-
-
-
-
 }
 
-
-// ##### 3 #####
+// ##### 3 ##### Mostrar los videos en general de un cierto género
 void generoVideos(vector<Peliculas*> peliculas, vector<Series*> series, 
 vector<Episodios*> episodios, string genero) {
-
-    // SI UTILIZAS EL GENERO DE ACCION DEVERIAN SALIR 28 VIDEOS *************
 
     int count = 1; 
 
@@ -255,15 +220,55 @@ vector<Episodios*> episodios, string genero) {
 
 }
 
-// ##### 4 #####
+// ##### 4 ##### Mostrar los episodios de una determinada serie con un rango de calificación determinada
+void episodiosSerieCalificacion(vector<Series*> series, 
+vector<Episodios*> episodios, double min, double max) {
 
-// ##### 5 #####
-void rangoPeliculas(vector<Peliculas*> peliculas, int min, int max) {
+    int opcion;
+    cout << endl << "Escoga una de las series" << endl << endl;
+
+    int cont = 1;
+    for(int i = 0; i < series.size(); i++) {
+    
+        cout << cont << ") ";
+        series[i]->showNombre();
+        cont++;
+    }
+    cout << "Ingresa el numero de la serie: ";
+    cin >> opcion;
+
+    cout << endl << "Deme el rango minimo de calificación (0.0 - 10.0): ";
+    cin >> min;
+    cout << "Deme el rango minimo de calificación (0.0 - 10.0): ";
+    cin >> max;
+    cout << endl;
+    
+    int count = 1;
+    for(int i = 0; i < episodios.size(); i++) {
+        if(series[opcion-1]->getID() == episodios[i]->getID()) {
+
+            if(episodios[i]->getCalificacion() >= min && episodios[i]->getCalificacion() <= max) {
+
+            cout << endl;
+            cout << count << ") ";
+            episodios[i]->show();
+            cout << endl;
+
+            count++;                  
+
+            }
+        }
+        
+    } 
+}
+
+// ##### 5 ##### Mostrar las películas con cierto rango de calificación
+void rangoPeliculas(vector<Peliculas*> peliculas, double min, double max) {
 
     int count = 1;
     for(int i = 0; i < peliculas.size(); i++) {
 
-        if(peliculas[i]->getCalificacion() >= min && peliculas[i]->getCalificacion() <= max) {
+        if(peliculas[i]->operator>=(min) && peliculas[i]->operator<=(max)) {
             cout << endl;
             cout << count << ") ";
             peliculas[i]->show();
@@ -274,12 +279,129 @@ void rangoPeliculas(vector<Peliculas*> peliculas, int min, int max) {
     }
 }
 
+// ##### 6 ##### Calificar un video
+void calificarVideo(vector<Peliculas*> peliculas, vector<Series*> series, vector<Episodios*> episodios) {
 
-// ##### 6 #####
+    int opcion;
+    cout << endl << "Que tipo de video desea calificar: " << endl;
+    cout << "1) Peliculas" << endl;
+    cout << "2) Episodios de series" << endl;
+    cout << "#: ";
+    cin >> opcion;
 
+    
+    if (opcion == 1) {
 
+        int count = 1;
+        int opcPeli;
+        cout << "Escoga una de las peliculas: " << endl;
+        for(int i = 0; i < peliculas.size(); i++) {
 
+            cout << endl;
+            cout << count << ") ";
+            peliculas[i]->show();
+            cout << endl;
 
+            count++;
+        }
+        cout << "#: ";
+        cin >> opcPeli;
+
+        cout << endl << "~~ Pelicula seleccionada ~~" << endl;
+        peliculas[opcPeli-1]->show();
+        cout << endl << "Calificación pasada: "; 
+        peliculas[opcPeli-1]->caliShow();
+
+        double nuevaCali;
+        cout << "Ingrese su nueva calificación (0.0 - 10.0): ";
+        cin >> nuevaCali;
+
+        peliculas[opcPeli-1]->setCalificacion(nuevaCali);
+
+    } else if(opcion == 2) {
+
+        int count = 1;
+        int opcEpi;
+        cout << "Escoga una de los episodios: " << endl;
+        for(int i = 0; i < episodios.size(); i++) {
+
+            cout << endl;
+            cout << count << ") ";
+            episodios[i]->show();
+            cout << endl;
+
+            count++;
+        }
+        cout << "#: ";
+        cin >> opcEpi;
+
+        cout << endl << "~~ Episodio seleccionado ~~" << endl;
+        episodios[opcEpi-1]->show();
+        cout << endl << "Calificación pasada: "; 
+        episodios[opcEpi-1]->caliShow();
+
+        double nuevaCali;
+        cout << "Ingrese su nueva calificación (0.0 - 10.0): ";
+        cin >> nuevaCali;
+
+        episodios[opcEpi-1]->setCalificacion(nuevaCali);
+
+        /*
+        int count = 1; ESTO YA NO
+        int opcSerie;
+        cout << endl << "Seleccione una serie: " << endl;
+        for(int i = 0; i < series.size(); i++) {
+
+            cout << endl;
+            cout << count << ") ";
+            series[i]->show();
+            cout << endl;
+
+            count++;
+        }
+        cout << "#: ";
+        cin >> opcSerie;
+
+        int countEpi = 1;
+        int opcEpi;
+        cout << endl << "Seleccione un episodio: " << endl;
+        for(int i = 0; i < episodios.size(); i++) {
+            if(series[opcSerie-1]->getID() == episodios[i]->getID()) {
+
+                cout << endl;
+                cout << countEpi << ") ";
+                episodios[i]->show();
+                cout << endl;
+
+                countEpi++;           
+            }
+        }
+
+        cout << "#: ";
+        cin >> opcEpi;
+
+        for(int i = 0; i < episodios.size(); i++) {
+            if(series[opcSerie-1]->getID() == episodios[i]->getID()) {
+
+                cout << endl << "~~ Episodio seleccionado ~~" << endl;;
+                episodios[opcEpi-1]->show();
+                cout << endl;
+
+                cout << endl << "~~ Episodio seleccionado ~~" << endl;
+                episodios[opcEpi-1]->show();
+                cout << endl << "Calificación pasada: "; 
+                episodios[opcEpi-1]->caliShow();
+
+                double nuevaCali;
+                cout << "Ingrese su nueva calificación (0.0 - 10.0): ";
+                cin >> nuevaCali; 
+
+                episodios[opcEpi-1]->setCalificacion(nuevaCali); 
+
+            }
+        }*/
+    }
+}
 
 int main() {
     vector<Peliculas*> peliculas;
@@ -321,13 +443,13 @@ int main() {
             cout << "1) Drama" << endl;
             cout << "2) Acción" << endl;
             cout << "3) Misterio" << endl;
-            cout << "Por favor escriba el nombre del genero (sin acentos): ";
+            cout << "Por favor escriba el nombre del genero (justo como se ve): ";
             cin >> genero;
             cout << endl;
 
-            cout << "Numero minimo de calificación (0.0-10.0): ";
+            cout << "Numero minimo de calificación (0.0 - 10.0): ";
             cin >> min;
-            cout << "Numero maximo de calificación (0.0-10.0): ";
+            cout << "Numero maximo de calificación (0.0 - 10.0): ";
             cin >> max;
 
             rangoGeneroVideos(peliculas, series, episodios, genero, min, max);
@@ -341,7 +463,7 @@ int main() {
             cout << "1) Drama" << endl;
             cout << "2) Acción" << endl;
             cout << "3) Misterio" << endl;
-            cout << "Por favor escriba el nombre del genero (sin acentos): ";
+            cout << "Por favor escriba el nombre del genero (como se ve): ";
             cin >> genero;
             cout << endl;
 
@@ -352,13 +474,16 @@ int main() {
 
         case 4:
             // Mostrar los episodios de una determinada serie con un rango de calificación determinada
+            episodiosSerieCalificacion(series, episodios, min, max);
+            cout << endl;
+
             break;
 
         case 5:
             // Mostrar las películas con cierto rango de calificación
-            cout << "Numero minimo de rango (0-10): ";
+            cout << "Numero minimo de rango (0.0 - 10.0): ";
             cin >> min;
-            cout << "Numero maximo de rango (0-10): ";
+            cout << "Numero maximo de rango (0.0 - 10.0): ";
             cin >> max;
 
             rangoPeliculas(peliculas, min, max);
@@ -368,6 +493,8 @@ int main() {
 
         case 6:
             // Calificar un video
+            calificarVideo(peliculas, series, episodios);
+            cout << endl;
             break;
 
         case 0:
